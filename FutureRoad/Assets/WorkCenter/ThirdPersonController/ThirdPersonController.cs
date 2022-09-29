@@ -241,6 +241,12 @@ public class ThirdPersonController : MonoBehaviour
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
+    public void MoveTo(Vector3 pos)
+    {
+        _controller.enabled = false;
+        _controller.transform.position = pos;
+        _controller.enabled = true;
+    }
 
     private void JumpAndGravity()
     {

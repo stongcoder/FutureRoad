@@ -8,6 +8,10 @@ public class FreeMoveCamera : MonoBehaviour
     public float zoomSensity = 5f;
     public float dragSensity = 1;
     public int accelerate = 1;
+    public void MoveTo(Vector3 pos)
+    {
+        transform.position = pos;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
