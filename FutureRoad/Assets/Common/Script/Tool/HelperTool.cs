@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,4 +20,20 @@ public class HelperTool
         return ang;
     }
     #endregion
+    public static int GetEnumNum(Type enumType)
+    {
+        return Enum.GetNames(enumType).Length;
+    }
+    public static bool IsCollectionEmpty(ICollection collection)
+    {
+        if (collection == null || collection.Count == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public static int GetRandomSeed()
+    {
+        return System.Guid.NewGuid().GetHashCode();
+    }
 }
