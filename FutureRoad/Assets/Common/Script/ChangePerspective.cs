@@ -7,7 +7,8 @@ public class ChangePerspective : MonoBehaviour
     public GameObject firstObj;
     public GameObject thirdObj;
     public FreeMoveCamera freeCam;
-    public ThirdPersonController tpc;
+    public PlayerCC cc;
+    public PlayerRB rb;
     bool isFirst;
     private void Start()
     {
@@ -34,13 +35,28 @@ public class ChangePerspective : MonoBehaviour
         isFirst = true;
         thirdObj.SetActive(false);
         firstObj.SetActive(true);
-        freeCam.MoveTo(tpc.CinemachineCameraTarget.transform.position);
+        if(cc!= null)
+        {
+            freeCam.MoveTo(cc.CinemachineCameraTarget.transform.position);
+        }
+        else
+        {
+            freeCam.MoveTo(rb.CinemachineCameraTarget.transform.position);
+
+        }
     }
     public void ChangeToThird()
     {
         isFirst = false;
         firstObj.SetActive(false);
         thirdObj.SetActive(true);
-        tpc.MoveTo(freeCam.transform.position);
+        if (cc != null)
+        {
+            cc.MoveTo(freeCam.transform.position);
+        }
+        else
+        {
+            rb.MoveTo(freeCam.transform.position);
+        }
     }
 }

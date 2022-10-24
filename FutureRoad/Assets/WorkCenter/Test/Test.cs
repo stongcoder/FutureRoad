@@ -6,47 +6,25 @@ using UnityEngine;
 using CustomTween;
 public class Test : MonoBehaviour
 {
-    [EditorHandle()]
-    public List<Vector3> wayPts = new List<Vector3> ();
-    public Transform target;
-    public float moveSpeed;
-    Sequence seq;
+    public Rigidbody rb;
+    private Vector3 origin;
     private void Start()
     {
-        PlayTween();
     }
-    [EditorTest]
-    public void PlayTween()
+    private void Update()
     {
-        ClearTween();
-        seq = new Sequence();
-        target.position=wayPts[wayPts.Count-1];
-        for (int i = 0; i < wayPts.Count; i++)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            var pt = wayPts[i];
-            float length;
-            if (i == 0)
-            {
-                length = Vector3.Magnitude(wayPts[0] - wayPts[wayPts.Count - 1]);
-            }
-            else
-            {
-                length = Vector3.Magnitude(wayPts[i] - wayPts[i - 1]);
-            }
-            var moveTime = length / moveSpeed;
-            seq.Join(target.TweenLookAt(pt, 0.1f));
-            seq.Append(target.TweenMove(pt, moveTime));
-
+            rb.position = origin;
         }
-        seq.SetLoop(-1);
-        seq.Start();
-    }
-    private void ClearTween()
-    {
-        if(seq != null)
+        var endPos = rb.position + rb.transform.forward;
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            seq.Kill();
-            seq = null;
+            rb.position = endPos;
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            rb.MovePosition(endPos);
         }
     }
 }
