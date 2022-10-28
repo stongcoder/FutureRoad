@@ -11,7 +11,6 @@ namespace SoulRemake
         public string keyRight = "d";
         public string keyRun = "left shift";
         public string keyJump = "space";
-        public string keyAttack = "j";
         public bool planarInputEnabled=true;
         public float smoothTime = 0.5f;
 
@@ -27,8 +26,8 @@ namespace SoulRemake
         [DisplayOnly] public bool canRun;
         [DisplayOnly] public bool canJump;
         [DisplayOnly] public bool canAttack;
+        [DisplayOnly] public bool canDefense;
         private bool lastJump;
-        private bool lastAttack;
         float upVelocity;
         float rightVelocity;
         private void Update()
@@ -46,7 +45,8 @@ namespace SoulRemake
             dMag = mapping.magnitude;
             dVec = (mapping.y * transform.forward + mapping.x * transform.right);
             canRun = Input.GetKey(keyRun);
-
+            canDefense = Input.GetMouseButton(1);
+            canAttack=Input.GetMouseButtonDown(0);
             bool newJump = Input.GetKey(keyJump);
             if (newJump && newJump != lastJump)
             {
@@ -56,30 +56,18 @@ namespace SoulRemake
             {
                 canJump = false;
             }
-            lastJump = newJump;
-
-            bool newAttack = Input.GetKey(keyAttack);
-            if (newAttack && newAttack != lastAttack)
-            {
-                canAttack = true;
-            }
-            else
-            {
-                canAttack = false;
-            }
-            lastAttack = newAttack;
-
-            if (Input.GetMouseButton(1))
-            {
-                cRight = Input.GetAxis("Mouse X");
-                cUp = Input.GetAxis("Mouse Y");
-            }
-            else
-            {
-                cRight=0;
-                cUp=0;
-            }
-
+            lastJump = newJump;         
+            //if (Input.GetMouseButton(1))
+            //{
+                
+            //}
+            //else
+            //{
+            //    cRight=0;
+            //    cUp=0;
+            //}
+            cRight = Input.GetAxis("Mouse X");
+            cUp = Input.GetAxis("Mouse Y");
         }
         //Õ÷‘≤”≥…‰∑®
         private Vector2 SquareToCircle(Vector2 input)
