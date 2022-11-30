@@ -11,6 +11,7 @@ namespace SoulRemake
         public string keyRight = "d";
         public string keyRun = "left shift";
         public string keyJump = "space";
+        public string keyLockOn = "l";
         public bool planarInputEnabled=true;
         public float smoothTime = 0.5f;
 
@@ -27,7 +28,7 @@ namespace SoulRemake
         [DisplayOnly] public bool canJump;
         [DisplayOnly] public bool canAttack;
         [DisplayOnly] public bool canDefense;
-        private bool lastJump;
+        [DisplayOnly] public bool lockOn;
         float upVelocity;
         float rightVelocity;
         private void Update()
@@ -47,25 +48,8 @@ namespace SoulRemake
             canRun = Input.GetKey(keyRun);
             canDefense = Input.GetMouseButton(1);
             canAttack=Input.GetMouseButtonDown(0);
-            bool newJump = Input.GetKey(keyJump);
-            if (newJump && newJump != lastJump)
-            {
-                canJump = true;
-            }
-            else
-            {
-                canJump = false;
-            }
-            lastJump = newJump;         
-            //if (Input.GetMouseButton(1))
-            //{
-                
-            //}
-            //else
-            //{
-            //    cRight=0;
-            //    cUp=0;
-            //}
+            canJump=Input.GetKeyDown(keyJump);
+            lockOn = Input.GetKeyDown(keyLockOn);
             cRight = Input.GetAxis("Mouse X");
             cUp = Input.GetAxis("Mouse Y");
         }
