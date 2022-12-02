@@ -155,7 +155,11 @@ public class BlockDataCollection
 
     public void Add(Vector3Int pos)
     {
-        if(Contain(pos)) return;
+        if (Contain(pos)) 
+        {
+            Debug.Log("位置已存在物体");
+            return;
+        } 
         var data = new BlockData(pos, creater);
         blockDatas[pos] = data;
         UpdateVisibility();

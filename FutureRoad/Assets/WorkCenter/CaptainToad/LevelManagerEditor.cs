@@ -61,7 +61,7 @@ public class LevelManagerEditor : CustomEditorWindowBase
     {
         if (Event.current == null) return;
         if (Application.isPlaying) return;
-        if(Event.current.type == EventType.KeyDown&&Event.current.keyCode == KeyCode.W)
+        if(Event.current.type == EventType.KeyDown&&Event.current.keyCode == KeyCode.LeftShift)
         {
             isRemove = !isRemove;
             DrawInspector();
@@ -77,21 +77,26 @@ public class LevelManagerEditor : CustomEditorWindowBase
                 var dir = hit.point - hit.transform.position;
                 if (dir.magnitude < 0.1f) return;
                 dir = HelperTool.GetNearDir_SixDirIn3D(dir);
-                var unit=hit.transform.GetComponentInParent<ProceduralBlockUnit>();
+                var helper=hit.transform.GetComponentInParent<TransformEditHelper>();
+                var parent = helper.physicCheckCenter.parent;
+                var localPos = mgr.creater.container.InverseTransformPoint(helper.transform.position);
                 if (!isRemove)
                 {
                     mgr.previewObj.transform.position = hit.point;
-                    var pos = unit.transform.localPosition + dir;
+                    var pos = localPos + dir;
                     Vector3Int temp = pos.ToInt();
-                    Debug.Log($"pos{hit.transform.position}dir{dir}temp{temp}");
+                    //Debug.Log($"pos{hit.transform.position}dir{dir}temp{temp}");
                     mgr.creater.AddUnit(temp);
                 }
                 else
                 {
-                    var pos = unit.transform.localPosition;
-                    Vector3Int temp = pos.ToInt() ;
+                    Vector3Int temp = localPos.ToInt() ;
                     mgr.creater.RemoveUnit(temp);
                 }
+            }
+            else
+            {
+                Debug.Log("no proceduralblock");
             }
         }
     }
