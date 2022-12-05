@@ -40,7 +40,6 @@ public class ProceduralStair : MonoBehaviour
                     var unit = units[num];
                     unit.SetActive(true);
                     unit.transform.localPosition = new Vector3(i, j, k)+new Vector3(0.5f,0.5f,0.5f);
-                    unit.transform.GetComponent<TransformEditHelper>().physicCheckCenter = transform;
                     num++;
                 }
             }

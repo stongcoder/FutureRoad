@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 881957894413458837}
   - component: {fileID: 5975969091956696887}
   - component: {fileID: 5553339667230259959}
+  - component: {fileID: 3513711967531531033}
   m_Layer: 10
   m_Name: AllWayDoor
   m_TagString: Untagged
@@ -96,7 +97,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3b0be6893c8bc40843b44c71f21022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicCheckCenter: {fileID: 881957894413458837}
+--- !u!114 &3513711967531531033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881957894413458836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f425e4c57b77bb346bbde6b9d08c0989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doors:
+  - {fileID: 881957893586423692}
+  - {fileID: 881957895153543458}
+  - {fileID: 881957895142450302}
+  - {fileID: 881957895487527977}
+  - {fileID: 881957895197555353}
+  - {fileID: 881957894913187350}
 --- !u!1 &881957894913187350
 GameObject:
   m_ObjectHideFlags: 0

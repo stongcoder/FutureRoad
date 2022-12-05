@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public ProceduralBlockCreater creater;
+    public ProceduralBlockCreater creater => creaters[createrIndex];
+    public int createrIndex = 0;
+    public List<ProceduralBlockCreater> creaters;
     public GameObject previewObj;
     private void Awake()
     {

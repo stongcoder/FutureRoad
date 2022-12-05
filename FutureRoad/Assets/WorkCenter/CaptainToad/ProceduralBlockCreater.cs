@@ -6,6 +6,15 @@ public class ProceduralBlockCreater : MonoBehaviour
     public Transform container;
     [SerializeField] Vector3Int initSize;
     [SerializeField]BlockDataCollection blockCollection;
+    public GameObject unitPrefab;
+    LevelManager mgr;
+    private void FindMgr()
+    {
+        if (mgr == null)
+        {
+            mgr = GameObject.FindObjectOfType<LevelManager>(true);
+        }
+    }
     [ContextMenu("Init")]
     public void Init()
     {
@@ -14,7 +23,17 @@ public class ProceduralBlockCreater : MonoBehaviour
         blockCollection.Init(this,initSize);        
         blockCollection.UpdateVisibility();
     }
-
+    private bool CheckIsInteger(Vector3 pos)
+    {
+        if (Mathf.Abs(pos.x % 1f) > 0.01f ||
+           Mathf.Abs(pos.y % 1f) > 0.01f ||
+           Mathf.Abs(pos.z % 1f) > 0.01f)
+        {
+            Debug.LogError($"位置不是整数num:{pos}{pos.x % 1},{pos.y % 1},{pos.z % 1}");
+            return false;
+        }
+        return true;
+    }
     public void AddUnit(Vector3Int pos)
     {
         blockCollection.Add(pos);
@@ -23,17 +42,28 @@ public class ProceduralBlockCreater : MonoBehaviour
     {
         blockCollection.Remove(pos);
     }
+
     public void AddExist(ProceduralBlockUnit unit)
     {
         var pos = unit.transform.localPosition;
-        if (Mathf.Abs(pos.x % 1)>0.01f||
-            Mathf.Abs(pos.y%1)>0.01f||
-            Mathf.Abs(pos.z%1)>0.01f)
+        if (!CheckIsInteger(pos))
         {
-            Debug.LogError($"位置不是整数num:{pos}{pos.x % 1},{pos.y % 1},{pos.z % 1}");
-            return;          
+            return;
         }
         blockCollection.AddExist(unit);
+    }
+    public void MoveUnit(ProceduralBlockUnit unit)
+    {
+        if (!CheckIsInteger(unit.transform.localPosition))
+        {
+            return;
+        }
+        blockCollection.MoveExist(unit);
+    }
+
+    public void DetachUnit(Vector3Int pos)
+    {
+        blockCollection.Detach(pos);
     }
 }
 
@@ -65,17 +95,21 @@ public class BlockDataCollection
             var key=blockDatas.keys[i];
             var val=blockDatas.vals[i];
             var state = IsVisible(key);
-            if (val.isVisible != state)
+            if(val.unit == null || val.unit.gameObject == null)
             {
-                if (state)
-                {
-                    val.GenerateUnit();
-                }
-                else
-                {
-                    val.DestroyUnit();
-                }
+                val.GenerateUnit();
             }
+            //if (val.isVisible != state)
+            //{
+            //    if (state)
+            //    {
+            //        val.GenerateUnit();
+            //    }
+            //    else
+            //    {
+            //        val.DestroyUnit();
+            //    }
+            //}
             val.isVisible = state;
         }
     }
@@ -173,6 +207,7 @@ public class BlockDataCollection
             return;
         }
         unit.ChangeKey(roundPos);
+        unit.transform.SetParent(creater.container);
         var data = new BlockData(roundPos, creater);
         data.isVisible = true;
         data.unit = unit;
@@ -180,46 +215,30 @@ public class BlockDataCollection
         UpdateVisibility();
         Debug.Log("加入成功");
     }
-}
-[System.Serializable]
-public class BlockData
-{
-    public Vector3Int pos;
-    public bool isVisible;
-    public ProceduralBlockCreater creater;
-    public ProceduralBlockUnit unit;
-    public BlockData(Vector3Int pos, ProceduralBlockCreater creater)
+    public void MoveExist(ProceduralBlockUnit unit)
     {
-        this.isVisible = false;
-        this.unit = null;
-        this.creater = creater;
-
-        this.pos = pos;
-    }
-    public BlockData Copy()
-    {
-        var data= new BlockData(this.pos,null);
-        data.unit = this.unit;
-        data.isVisible = this.isVisible;
-        data.creater = this.creater;
-        return data;
-    }
-    public void GenerateUnit()
-    {
-        isVisible = true;
-        var go = HelperTool.Instantiate(ProceduralBlockUnit.UnitPrefab, creater.container);
-        go.transform.localPosition = pos;
-        unit= go.GetComponent<ProceduralBlockUnit>();
-        unit.creater = creater;
-        unit.ChangeKey(pos);
-    }
-    public void DestroyUnit()
-    {
-        isVisible=false;
-        if (unit.gameObject != null)
+        var roundPos = unit.transform.localPosition.ToInt();
+        if (Contain(roundPos))
         {
-            GameObject.DestroyImmediate(unit.gameObject);
+            Debug.LogError("此位置已被占用");
+            unit.gameObject.name = ("overlapped,移动后重新使用move功能");
+            return;
         }
-        unit = null;    
+        var data = blockDatas[unit.key];
+        blockDatas.Remove(unit.key);
+        unit.ChangeKey(roundPos);
+        blockDatas[roundPos] = data;
+        UpdateVisibility();
+        Debug.Log("移动成功");
+    }
+
+    public void Detach(Vector3Int pos)
+    {
+        if (!blockDatas.ContainsKey(pos))
+        {
+            Debug.LogError("该位置不存在block");
+        }
+        blockDatas.Remove(pos);
+        UpdateVisibility();
     }
 }

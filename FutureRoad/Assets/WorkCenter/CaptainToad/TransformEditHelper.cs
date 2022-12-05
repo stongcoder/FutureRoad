@@ -4,5 +4,4 @@ using UnityEngine;
 
 public class TransformEditHelper : MonoBehaviour
 {
-    public Transform physicCheckCenter;
 }

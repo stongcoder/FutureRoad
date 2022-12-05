@@ -38,6 +38,10 @@ public class LevelManagerEditor : CustomEditorWindowBase
     public void DrawInspector()
     {
         if (root == null) return;
+        if (mgr == null)
+        {
+            mgr = FindObjectOfType<LevelManager>(true);
+        }
         root.Clear();
         var removeTog = new Toggle();
         removeTog.RegisterValueChangedCallback<bool>((evt) =>
@@ -47,6 +51,53 @@ public class LevelManagerEditor : CustomEditorWindowBase
         removeTog.value = isRemove;
         removeTog.text = "É¾³ý";
         root.Add(removeTog);
+        //var so = new SerializedObject(mgr);
+        //var creater = so.FindProperty("creater");
+        //var pp = new PropertyField(creater);
+        //pp.Bind(so); 
+        //root.Add(pp);
+        List<Toggle> toggles=new List<Toggle>();
+        for (int i = 0; i < mgr.creaters.Count; i++)
+        {
+            var index = i;
+            var hcontainer=new VisualElement();
+            hcontainer.style.flexDirection = FlexDirection.Row;
+            var btn=new Button(() =>
+            {
+                if (mgr.createrIndex != index)
+                {
+                    mgr.createrIndex = index;
+                }
+                for (int j = 0; j < toggles.Count; j++)
+                {
+                    if (j == index)
+                    {
+                        toggles[index].value = true;
+                    }
+                    else
+                    {
+                        toggles[index].value = false;
+                    }
+                }
+            });
+            btn.text = mgr.creaters[index].gameObject.name;
+            var tog =new Toggle();
+            toggles.Add(tog);
+            hcontainer.Add(btn);
+            hcontainer.Add(tog);
+            root.Add(hcontainer);
+        }
+        for (int j = 0; j < toggles.Count; j++)
+        {
+            if (j == mgr.createrIndex)
+            {
+                toggles[mgr.createrIndex].value = true;
+            }
+            else
+            {
+                toggles[mgr.createrIndex].value = false;
+            }
+        }
     }
     private void OnEnable()
     {
@@ -59,6 +110,10 @@ public class LevelManagerEditor : CustomEditorWindowBase
     }
     private void CheckInput(SceneView sceneView)
     {
+        if (mgr == null)
+        {
+            mgr=FindObjectOfType<LevelManager>(true);
+        }
         if (Event.current == null) return;
         if (Application.isPlaying) return;
         if(Event.current.type == EventType.KeyDown&&Event.current.keyCode == KeyCode.LeftShift)
@@ -78,7 +133,6 @@ public class LevelManagerEditor : CustomEditorWindowBase
                 if (dir.magnitude < 0.1f) return;
                 dir = HelperTool.GetNearDir_SixDirIn3D(dir);
                 var helper=hit.transform.GetComponentInParent<TransformEditHelper>();
-                var parent = helper.physicCheckCenter.parent;
                 var localPos = mgr.creater.container.InverseTransformPoint(helper.transform.position);
                 if (!isRemove)
                 {
