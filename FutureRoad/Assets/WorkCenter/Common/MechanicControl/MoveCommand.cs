@@ -14,8 +14,13 @@ namespace MechanicControl
         }
         public Transform target;
         public Transform endTarget;
+        public bool isPlayer;
         public override TweenBase GetTween()
         {
+            if (isPlayer)
+            {
+                target = LevelManager.Instance.player.transform;
+            }
             var tween = new MoveTween(target, endTarget, duration);
             return tween;
         }

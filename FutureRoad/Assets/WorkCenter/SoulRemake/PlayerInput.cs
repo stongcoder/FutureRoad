@@ -15,7 +15,6 @@ namespace SoulRemake
         public bool planarInputEnabled=true;
         public float smoothTime = 0.5f;
 
-
         [DisplayOnly] public float dUpTarget;
         [DisplayOnly] public float dRightTarget;
         [DisplayOnly] public float dUp;

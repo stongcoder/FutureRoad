@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 public class ProceduralBlockCreater : MonoBehaviour
 {
     public Transform container;
@@ -34,13 +35,21 @@ public class ProceduralBlockCreater : MonoBehaviour
         }
         return true;
     }
+    private void SetDirty()
+    {
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
+    }
     public void AddUnit(Vector3Int pos)
     {
         blockCollection.Add(pos);
+        SetDirty();
     }
     public void RemoveUnit(Vector3Int pos)
     {
         blockCollection.Remove(pos);
+        SetDirty();
     }
 
     public void AddExist(ProceduralBlockUnit unit)
@@ -51,6 +60,7 @@ public class ProceduralBlockCreater : MonoBehaviour
             return;
         }
         blockCollection.AddExist(unit);
+        SetDirty();
     }
     public void MoveUnit(ProceduralBlockUnit unit)
     {
@@ -59,11 +69,13 @@ public class ProceduralBlockCreater : MonoBehaviour
             return;
         }
         blockCollection.MoveExist(unit);
+        SetDirty();
     }
 
     public void DetachUnit(Vector3Int pos)
     {
         blockCollection.Detach(pos);
+        SetDirty();
     }
 }
 
@@ -179,6 +191,7 @@ public class BlockDataCollection
         }
         return null;
     }
+
     public void Remove(Vector3Int pos)
     {
         if (!blockDatas.ContainsKey(pos)) return;

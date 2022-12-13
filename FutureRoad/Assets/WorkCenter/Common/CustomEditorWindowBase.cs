@@ -1,8 +1,6 @@
+#if UNITY_EDITOR
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,3 +25,5 @@ public class CustomEditorWindowBase : EditorWindow
         container.Add(imguiContainer);
     }
 }
+
+#endif

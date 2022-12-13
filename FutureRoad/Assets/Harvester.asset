@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+  m_Name: Harvester
+  m_EditorClassIdentifier: 
+  mBehaviorSource:
+    behaviorName: Harvester
+    behaviorDescription: Collect and drop off gold
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(0,0)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.5,112)"},"ID":1,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Samples.NextGoldFieldTarget","NodeData":{"Offset":"(-190,136)","Comment":"Determine
+        which gold field is available next"},"ID":2,"Name":"Next Gold Field Target","Instant":true,"SharedTransformtarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Target","IsShared":true}},{"Type":"BehaviorDesigner.Samples.LimitedResourceGuard","NodeData":{"Offset":"(84,141)","Comment":"Wait
+        until that gold field is avilable"},"ID":3,"Name":"Limited Resource Guard","Instant":true,"SharedTransformlimitedResourceTransform":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Target","IsShared":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(0.5,105)"},"ID":4,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Samples.Seek","NodeData":{"Offset":"(-573.5,128)","Comment":"Seek
+        the gold field"},"ID":5,"Name":"Seek","Instant":true,"SharedFloatmoveSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
+        Speed","IsShared":true,"SinglemValue":15},"SharedFloatrotationSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Rotation
+        Speed","IsShared":true,"SinglemValue":1000},"BooleanrotateToTarget":false,"BooleanavoidDefenseUnits":false,"SharedVector3targetPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"","Vector3mValue":"(0,0,0)"},"SharedTransformtarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Target","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-400.5,136)","Comment":"Repeat
+        the gold collection a few times"},"ID":6,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"","Int32mValue":5},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"","BooleanmValue":false},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"","BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.5,117)"},"ID":7,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Samples.HarvestGold","NodeData":{"Offset":"(-112.5,123)","Comment":"Harvest
+        some gold"},"ID":8,"Name":"Harvest Gold","Instant":true,"Singleamount":2},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(96.5,120)","Comment":"Wait
+        a moment to harvest the gold"},"ID":9,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"","SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"","BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"","SinglemValue":0},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"","SinglemValue":0}}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(3.5,138)"},"ID":10,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Samples.IsResourceAvailable","NodeData":{"Offset":"(-126.5,116)","Comment":"Is
+        the unloading dock available?"},"ID":11,"Name":"Is Resource Available","Instant":true,"LimitedResourceresource":0},{"Type":"BehaviorDesigner.Samples.Seek","NodeData":{"Offset":"(112.5,125)","Comment":"It''s
+        not so go to the wait point"},"ID":12,"Name":"Seek","Instant":true,"SharedFloatmoveSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
+        Speed","IsShared":true,"SinglemValue":15},"SharedFloatrotationSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Rotation
+        Speed","IsShared":true,"SinglemValue":1000},"BooleanrotateToTarget":false,"BooleanavoidDefenseUnits":false,"SharedVector3targetPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"","Vector3mValue":"(0,0,0)"},"SharedTransformtarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"","TransformmValue":1}}]},{"Type":"BehaviorDesigner.Samples.LimitedResourceGuard","NodeData":{"Offset":"(382,144)","Comment":"Wait
+        until the unloading dock is available"},"ID":13,"Name":"Limited Resource
+        Guard","Instant":true,"SharedTransformlimitedResourceTransform":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"","TransformmValue":2},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.5,123)"},"ID":14,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Samples.Seek","NodeData":{"Offset":"(-237.5,125)","Comment":"Go
+        to the unloading dock"},"ID":15,"Name":"Seek","Instant":true,"SharedFloatmoveSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
+        Speed","IsShared":true,"SinglemValue":15},"SharedFloatrotationSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Rotation
+        Speed","IsShared":true,"SinglemValue":1000},"BooleanrotateToTarget":false,"BooleanavoidDefenseUnits":false,"SharedVector3targetPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"","Vector3mValue":"(0,0,0)"},"SharedTransformtarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"","TransformmValue":3}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(4.5,125)","Comment":"Wait
+        a moment to unload the gold"},"ID":16,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"","SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"","BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"","SinglemValue":0},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"","SinglemValue":0}},{"Type":"BehaviorDesigner.Samples.UnloadGold","NodeData":{"Offset":"(223.5,123)","Comment":"And
+        unload the gold"},"ID":17,"Name":"Unload Gold","Instant":true}]}]}]}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.BehaviorTreeReference","NodeData":{"Offset":"(-249.020325,114.020309)"},"ID":18,"Name":"Behavior
+        Tree Reference","Instant":true,"ExternalBehavior[]externalBehaviors":[null,null],"SharedNamedVariable[]variables":[],"Booleancollapsed":false}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects:
+        - {fileID: 0}
+        - {fileID: 0}
+        - {fileID: 0}
+        - {fileID: 0}
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.4

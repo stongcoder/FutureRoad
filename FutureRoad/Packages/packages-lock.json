@@ -10,10 +10,12 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.collab-proxy": {
-      "version": "1.9.0",
+      "version": "1.17.2",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.services.core": "1.0.1"
+      },
       "url": "https://packages.unity.cn"
     },
     "com.unity.editorcoroutines": {
@@ -56,10 +58,12 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.postprocessing": {
-      "version": "2.3.0",
+      "version": "3.2.2",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
       "url": "https://packages.unity.cn"
     },
     "com.unity.probuilder": {
@@ -74,11 +78,20 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.recorder": {
-      "version": "2.5.5",
+      "version": "3.0.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.timeline": "1.0.0"
+      },
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.services.core": {
+      "version": "1.0.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.cn"
     },
@@ -129,13 +142,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.ui.builder": {
-      "version": "1.0.0-preview.18",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.cn"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

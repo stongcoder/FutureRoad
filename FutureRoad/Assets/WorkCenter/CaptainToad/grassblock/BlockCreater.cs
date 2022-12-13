@@ -49,6 +49,8 @@ public class BlockCreater : CreaterBase
                 }
             }
         }
+#if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+#endif
     }
 }

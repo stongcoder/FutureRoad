@@ -30,6 +30,10 @@ namespace CustomTween
         public override void _Start()
         {
             base._Start();
+            if(target.GetComponent<Rigidbody>() != null)
+            {
+                target.GetComponent<Rigidbody>().isKinematic = true;
+            }
             start = target.position;
             if(tweenType == 1)
             {
@@ -38,7 +42,12 @@ namespace CustomTween
             onComplete += () =>
             {
                 target.position = end;
+                if (target.GetComponent<Rigidbody>() != null)
+                {
+                    target.GetComponent<Rigidbody>().isKinematic = false;
+                }
             };
         }
+        
     }
 }

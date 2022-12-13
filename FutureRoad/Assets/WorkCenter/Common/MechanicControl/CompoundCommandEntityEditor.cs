@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using MechanicControl;
 using System;
 using System.Collections;
@@ -40,7 +41,7 @@ public class CompoundCommandEntityEditor : EditorWindow
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/WorkCenter/Common/MechanicControl/CompoundCommandEntityEditor.uxml");
         VisualElement labelFromUXML = visualTree.Instantiate();
         rootVisualElement.Add(labelFromUXML);
-        root=rootVisualElement.Q<ScrollView>();
+        root = rootVisualElement.Q<ScrollView>();
     }
     private void OnDestroy()
     {
@@ -48,7 +49,7 @@ public class CompoundCommandEntityEditor : EditorWindow
     }
     Vector2 scrollPos;
     EditorCoroutine scrollCoroutine;
-    List<EditorCoroutine> coroutines=new List<EditorCoroutine>();
+    List<EditorCoroutine> coroutines = new List<EditorCoroutine>();
     SerializedObject so;
     SerializedProperty sp;
     void AddBtn(string name, Action cb, VisualElement parent)
@@ -63,8 +64,8 @@ public class CompoundCommandEntityEditor : EditorWindow
         IMGUIContainer imguiContainer = new IMGUIContainer(() =>
         {
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(sp,new GUIContent(name));
-            if(EditorGUI.EndChangeCheck())
+            EditorGUILayout.PropertyField(sp, new GUIContent(name));
+            if (EditorGUI.EndChangeCheck())
                 sp.serializedObject.ApplyModifiedProperties();
         });
         container.Add(imguiContainer);
@@ -76,9 +77,9 @@ public class CompoundCommandEntityEditor : EditorWindow
         coroutines.Add(EditorCoroutineUtility.StartCoroutine(RegisterPP(pp), this));
         return pp;
     }
-    Foldout AddCustomPropertyField(SerializedProperty sp,CommandBase cmd,string name,bool isRecursive)
+    Foldout AddCustomPropertyField(SerializedProperty sp, CommandBase cmd, string name, bool isRecursive)
     {
-        var members=cmd.GetType().GetMembers();
+        var members = cmd.GetType().GetMembers();
         var fold = new Foldout();
         fold.text = name;
         for (int i = 0; i < members.Length; i++)
@@ -117,7 +118,7 @@ public class CompoundCommandEntityEditor : EditorWindow
             }
             else
             {
-                fold.Add(AddPropertyField(memberSp, member.Name)) ;
+                fold.Add(AddPropertyField(memberSp, member.Name));
             }
         }
         return fold;
@@ -170,7 +171,7 @@ public class CompoundCommandEntityEditor : EditorWindow
             if (string.IsNullOrEmpty(name))
             {
                 name = index.ToString();
-            }            
+            }
             var fold = AddCustomPropertyField(data, entity.commands[index], name, true);
             folds.Add(fold);
             inspector.Add(fold);
@@ -189,7 +190,7 @@ public class CompoundCommandEntityEditor : EditorWindow
                     var temp = entity.commands[index - 1];
                     entity.commands[index - 1] = entity.commands[index];
                     entity.commands[index] = temp;
-                    var state=foldStates[index];
+                    var state = foldStates[index];
                     foldStates[index] = foldStates[index - 1];
                     foldStates[index - 1] = state;
 
@@ -204,7 +205,7 @@ public class CompoundCommandEntityEditor : EditorWindow
                     entity.commands[index + 1] = entity.commands[index];
                     entity.commands[index] = temp;
                     var state = foldStates[index];
-                    foldStates[index] = foldStates[index +1];
+                    foldStates[index] = foldStates[index + 1];
                     foldStates[index + 1] = state;
                     DrawInspector();
                 }, container1);
@@ -241,7 +242,7 @@ public class CompoundCommandEntityEditor : EditorWindow
 
     private IEnumerator SetScrollView()
     {
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             yield return null;
 
@@ -259,7 +260,7 @@ public class CompoundCommandEntityEditor : EditorWindow
                 foldStates[index] = evt.newValue;
             });
         }
-        
+
 
     }
     private IEnumerator RegisterPP(PropertyField pp)
@@ -274,6 +275,8 @@ public class CompoundCommandEntityEditor : EditorWindow
             {
                 DrawInspector();
             });
-        }        
+        }
     }
 }
+
+#endif

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR    
 using MechanicControl;
 using System;
 using System.Collections;
@@ -7,19 +8,18 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class LevelManagerEditor : CustomEditorWindowBase
 {
     VisualElement root;
     LevelManager mgr;
     bool isRemove;
-    
+
     public static void Open(LevelManager mgr)
     {
         var wnd = CreateWindow<LevelManagerEditor>();
         try
         {
-            wnd.mgr = mgr; 
+            wnd.mgr = mgr;
             wnd.DrawInspector();
         }
         catch (Exception e)
@@ -45,7 +45,7 @@ public class LevelManagerEditor : CustomEditorWindowBase
         root.Clear();
         var removeTog = new Toggle();
         removeTog.RegisterValueChangedCallback<bool>((evt) =>
-        { 
+        {
             isRemove = evt.newValue;
         });
         removeTog.value = isRemove;
@@ -56,13 +56,13 @@ public class LevelManagerEditor : CustomEditorWindowBase
         //var pp = new PropertyField(creater);
         //pp.Bind(so); 
         //root.Add(pp);
-        List<Toggle> toggles=new List<Toggle>();
+        List<Toggle> toggles = new List<Toggle>();
         for (int i = 0; i < mgr.creaters.Count; i++)
         {
             var index = i;
-            var hcontainer=new VisualElement();
+            var hcontainer = new VisualElement();
             hcontainer.style.flexDirection = FlexDirection.Row;
-            var btn=new Button(() =>
+            var btn = new Button(() =>
             {
                 if (mgr.createrIndex != index)
                 {
@@ -72,16 +72,16 @@ public class LevelManagerEditor : CustomEditorWindowBase
                 {
                     if (j == index)
                     {
-                        toggles[index].value = true;
+                        toggles[j].value = true;
                     }
                     else
                     {
-                        toggles[index].value = false;
+                        toggles[j].value = false;
                     }
                 }
             });
             btn.text = mgr.creaters[index].gameObject.name;
-            var tog =new Toggle();
+            var tog = new Toggle();
             toggles.Add(tog);
             hcontainer.Add(btn);
             hcontainer.Add(tog);
@@ -112,11 +112,11 @@ public class LevelManagerEditor : CustomEditorWindowBase
     {
         if (mgr == null)
         {
-            mgr=FindObjectOfType<LevelManager>(true);
+            mgr = FindObjectOfType<LevelManager>(true);
         }
         if (Event.current == null) return;
         if (Application.isPlaying) return;
-        if(Event.current.type == EventType.KeyDown&&Event.current.keyCode == KeyCode.LeftShift)
+        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.LeftShift)
         {
             isRemove = !isRemove;
             DrawInspector();
@@ -127,12 +127,12 @@ public class LevelManagerEditor : CustomEditorWindowBase
             //Debug.Log(mousePos);
             var ray = sceneView.camera.ScreenPointToRay(mousePos);
             //Debug.DrawLine(ray.origin, ray.origin + ray.direction * 30f, Color.red, 5f);
-            if (Physics.Raycast(ray, out var hit, 30f,LayerMask.GetMask("ProceduralBlock")))
-            {              
+            if (Physics.Raycast(ray, out var hit, 30f, LayerMask.GetMask("ProceduralBlock")))
+            {
                 var dir = hit.point - hit.transform.position;
                 if (dir.magnitude < 0.1f) return;
                 dir = HelperTool.GetNearDir_SixDirIn3D(dir);
-                var helper=hit.transform.GetComponentInParent<TransformEditHelper>();
+                var helper = hit.transform.GetComponentInParent<TransformEditHelper>();
                 var localPos = mgr.creater.container.InverseTransformPoint(helper.transform.position);
                 if (!isRemove)
                 {
@@ -144,7 +144,7 @@ public class LevelManagerEditor : CustomEditorWindowBase
                 }
                 else
                 {
-                    Vector3Int temp = localPos.ToInt() ;
+                    Vector3Int temp = localPos.ToInt();
                     mgr.creater.RemoveUnit(temp);
                 }
             }
@@ -155,3 +155,5 @@ public class LevelManagerEditor : CustomEditorWindowBase
         }
     }
 }
+
+#endif

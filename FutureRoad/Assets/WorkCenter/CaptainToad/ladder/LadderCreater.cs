@@ -9,6 +9,8 @@ namespace LevelTool
         public int unitNum;
         [SerializeField] int max = 50;
         [SerializeField] GameObject unitPf;
+        [SerializeField] GameObject down;
+        [SerializeField] GameObject up;
         private void OnValidate()
         {
             if (unitNum > max||unitNum<0) return;
@@ -33,6 +35,11 @@ namespace LevelTool
                 var unit = units[i];
                 unit.SetActive(true);
                 unit.transform.localPosition=new Vector3(0,i*0.5f,0);
+            }
+            if (units.Count >= 2)
+            {
+                down.transform.localPosition=new Vector3(0,0,0);
+                up.transform.localPosition = new Vector3(0, (unitNum) *0.5f, 0);
             }
         }
     }

@@ -4,11 +4,9 @@ using UnityEngine;
 using CustomTween;
 namespace MechanicControl
 {
-    public class SequenceCommandEntity : MonoBehaviour
-    {
-        [SerializeReference]
-        public List<CommandBase> commands = new List<CommandBase>();       
-        public TweenBase GetTween()
+    public class SequenceCommandEntity : CommandEntity
+    {    
+        public override TweenBase GetTween()
         {
             if (HelperTool.IsCollectionEmpty(commands)) return null;
             var seq = new Sequence();
@@ -23,7 +21,7 @@ namespace MechanicControl
             return seq;
         }
 
-        public void DoAction()
+        public override void DoAction()
         {
             if (HelperTool.IsCollectionEmpty(commands)) return;
             foreach (var command in commands)
